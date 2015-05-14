@@ -1,4 +1,4 @@
-package com.yi.admin.demo.model;
+package com.yi.admin.model.demo;
 
 import com.yi.core.model.BaseModel;
 

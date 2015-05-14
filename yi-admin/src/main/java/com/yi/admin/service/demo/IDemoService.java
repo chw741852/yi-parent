@@ -1,7 +1,7 @@
-package com.yi.admin.demo.service;
+package com.yi.admin.service.demo;
 
+import com.yi.admin.model.demo.DemoModel;
 import com.yi.core.service.IBaseService;
-import com.yi.admin.demo.model.DemoModel;
 import org.springframework.transaction.annotation.Transactional;
 
 /**

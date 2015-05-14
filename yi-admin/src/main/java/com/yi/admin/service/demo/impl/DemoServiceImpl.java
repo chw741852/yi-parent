@@ -1,8 +1,8 @@
-package com.yi.admin.demo.service.impl;
+package com.yi.admin.service.demo.impl;
 
+import com.yi.admin.model.demo.DemoModel;
+import com.yi.admin.service.demo.IDemoService;
 import com.yi.core.service.impl.BaseServiceImpl;
-import com.yi.admin.demo.model.DemoModel;
-import com.yi.admin.demo.service.IDemoService;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,7 +1,7 @@
-package com.yi.admin.demo.controller;
+package com.yi.admin.controller.demo;
 
-import com.yi.admin.demo.model.DemoModel;
-import com.yi.admin.demo.service.IDemoService;
+import com.yi.admin.model.demo.DemoModel;
+import com.yi.admin.service.demo.IDemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

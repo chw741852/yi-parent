@@ -12,7 +12,7 @@ import java.util.List;
  * 字典表
  */
 @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Entity(name = "orochi_core_dict")
+@Entity(name = "yi_core_dict")
 public class DictModel extends BaseModel {
     @Column(nullable = false, length = 36)
     private String code;

@@ -1,8 +1,8 @@
-package com.yi.admin.demo.dao.impl;
+package com.yi.admin.dao.demo.impl;
 
+import com.yi.admin.dao.demo.IDemoDao;
+import com.yi.admin.model.demo.DemoModel;
 import com.yi.core.dao.impl.BaseDaoImpl;
-import com.yi.admin.demo.dao.IDemoDao;
-import com.yi.admin.demo.model.DemoModel;
 import org.springframework.stereotype.Repository;
 
 /**
