@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: discovery
+  cloud:
+    consul:
+      discovery:
+        hostname: localhost
+        port: 8500
