@@ -1,0 +1,10 @@
+server:
+  port: 8888
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:chw741852/yi-repo.git
+      label: master
+      profile: dev

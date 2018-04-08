@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: d1
 my:
   name: cai
   age: 10
