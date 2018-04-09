@@ -7,8 +7,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>d1</module>
-        <module>discovery</module>
-        <module>configserver</module>
         <module>gateway</module>
     </modules>
     <packaging>pom</packaging>

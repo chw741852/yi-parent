@@ -8,3 +8,6 @@ spring:
       discovery:
         locator:
           enabled: true
+    consul:
+      host: localhost
+      port: 8500

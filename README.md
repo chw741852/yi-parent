@@ -1,2 +1,1 @@
-环境：
-jdk1.7, tomcat7, maven3, mysql
+使用consul做注册中心，以及配置中心

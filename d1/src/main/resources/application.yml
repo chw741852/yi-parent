@@ -1,6 +1,13 @@
+server:
+  port: 8080
 spring:
   application:
     name: d1
+  cloud:
+    consul:
+      port: 8500
+      host: localhost
 my:
   name: cai
   age: 10
+
