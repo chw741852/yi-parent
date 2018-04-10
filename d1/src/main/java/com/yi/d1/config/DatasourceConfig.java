@@ -11,9 +11,9 @@ import javax.sql.DataSource;
 @Configuration
 @MapperScan(basePackages = "com.yi.d1.mapper")
 public class DatasourceConfig {
-    @Bean
+    @Bean(initMethod = "init", destroyMethod = "close")
     @ConfigurationProperties(prefix = "druid")
-    public DataSource dataSource() {
+    public DruidDataSource dataSource() {
         return new DruidDataSource();
     }
 }
