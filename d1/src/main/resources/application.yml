@@ -17,3 +17,22 @@ feign:
       default:
         connectTimeout: 5000
         readTimeout: 5000
+
+druid:
+  driverClassName: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+  username: root
+  password: 123123
+  initialSize: 1
+  minIdle: 1
+  maxActive: 20
+  maxWait: 60000
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 30000
+  validationQuery: select 'x'
+  testWhileIdle: true
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  filters: stat

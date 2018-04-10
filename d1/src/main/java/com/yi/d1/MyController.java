@@ -26,6 +26,11 @@ public class MyController {
         return "Hello,i'm " + name + "," + age + " years old.\r\nAnd " + foo + " \r\n And from d2 index: " + d2FeignService.index();
     }
 
+    @GetMapping("/user")
+    public String user() {
+        return d2FeignService.userList();
+    }
+
     @GetMapping("hello")
     public String hello() {
         return "Hello World!";

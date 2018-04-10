@@ -8,4 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface D2FeignService {
     @RequestMapping(method = RequestMethod.GET, value = "/index")
     String index();
+
+    @RequestMapping(method = RequestMethod.GET, value = "/user")
+    String userList();
 }
