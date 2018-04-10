@@ -13,7 +13,6 @@
         </commentGenerator>
 
         <!--数据库链接URL，用户名、密码 -->
-        <!--<jdbcConnection driverClass="${druid.driverClassName}" connectionURL="${druid.url}" userId="${druid.username}" password="${druid.password}"/>-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/db_test?serverTimezone=Asia/Shanghai"
                         userId="root" password="123123"/>
         <javaTypeResolver>
