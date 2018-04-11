@@ -62,6 +62,7 @@
                 <version>${mybatis-spring-boot.version}</version>
             </dependency>
 
+            <!-- 工具类 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -75,6 +76,7 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
+        <!-- java 9 需要依赖 -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
