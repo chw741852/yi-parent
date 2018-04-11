@@ -33,6 +33,7 @@
     </appender>
     <logger name="org" level="INFO"/>
     <logger name="com.netflix" level="INFO"/>
+    <logger name="io.lettuce" level="INFO"/>
     <root level="debug">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
