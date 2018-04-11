@@ -2,6 +2,8 @@ package com.yi.d1.mapper;
 
 import com.yi.d1.domain.User;
 
+import java.util.List;
+
 public interface UserMapper {
     int deleteByPrimaryKey(String id);
 
@@ -14,4 +16,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    // 自定义
+    List<User> findAll();
 }

@@ -1,5 +1,6 @@
-package com.yi.d1;
+package com.yi.d1.controller;
 
+import com.yi.d1.service.D2FeignService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class MyController {
         return "Hello,i'm " + name + "," + age + " years old.\r\nAnd " + foo + " \r\n And from d2 index: " + d2FeignService.index();
     }
 
-    @GetMapping("/user")
+    @GetMapping("/d2User")
     public String user() {
         return d2FeignService.userList();
     }

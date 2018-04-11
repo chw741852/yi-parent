@@ -1,4 +1,4 @@
-package com.yi.d1;
+package com.yi.d1.service;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
