@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test 环境 -->
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="console_pattern">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} [d2,%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-Span-Export}] %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}[%L]}{cyan} %clr{:}{faint} %m%n</Property>
+        <Property name="file_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${sys:PID} --- [%15.15t] %-40.40c{1.}[%L] : %m%n</Property>
+        <!-- 日志文件大小 -->
+        <Property name="file_size">1024MB</Property>
+        <Property name="file_name">logs/d2.log</Property>
+        <Property name="gz_file_name">logs/%d{yyyy-MM}/d2_%d{yyyy-MM-dd}-%i.log.gz</Property>
+        <!--<Property name="kafka_servers">10.241.10.104:9092</Property>-->
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT"><!-- 输出debug及以上级别的信息（onMatch），其他拒绝（onMismatch） -->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${console_pattern}"/>
+        </Console>
+
+        <!-- 输出trace及以上级别的日志到指定文件，最大10M，warn、error除外 -->
+        <RollingFile name="file_log" fileName="${sys:file_name}" filePattern="${gz_file_name}">
+            <PatternLayout pattern="${file_pattern}"/>
+            <Policies>
+                <!-- 每天压缩一次 -->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" />
+                <!-- 每1024MB压缩一次 -->
+                <SizeBasedTriggeringPolicy size="${file_size}" />
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <!--<Kafka name="kafka_log" topic="java-d2">-->
+        <!--<PatternLayout pattern="${file_pattern}"/>-->
+        <!--<Property name="bootstrap.servers">10.241.10.104:9092</Property>-->
+        <!--</Kafka>-->
+    </Appenders>
+    <loggers>
+        <!--<AsyncLogger name="org.apache.kafka" level="info"/>-->
+        <AsyncLogger name="com.yi.d2" level="debug" additivity="false" includeLocation="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="file_log"/>
+            <!--<AppenderRef ref="kafka_log"/>-->
+        </AsyncLogger>
+        <asyncRoot level="info" includeLocation="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="file_log"/>
+            <!--<AppenderRef ref="kafka_log"/>-->
+        </asyncRoot>
+    </loggers>
+</Configuration>
