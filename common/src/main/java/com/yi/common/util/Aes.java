@@ -1,4 +1,4 @@
-package com.yi.d1.util;
+package com.yi.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,14 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 
+import static com.yi.common.util.CipherUtil.byte2hex;
+import static com.yi.common.util.CipherUtil.hex2byte;
+
+/**
+ * Created by caihongwei on 04/12/2017 5:05 PM.
+ */
 public class Aes {
-    private static final Logger logger = LoggerFactory.getLogger(Aes.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Aes.class);
 
     private static final String KEY_ALGORITHM = "AES";
     private static final String ALGORITHM = "AES/CBC/NoPadding";
@@ -22,6 +28,11 @@ public class Aes {
     private String secretKey;
     private String iv;
 
+    /**
+     * aes构造函数
+     * @param key 必须16位字符串
+     * @param iv 必须16位字符串
+     */
     public Aes(String key, String iv) {
         this.secretKey = key;
         this.iv = iv;
@@ -36,7 +47,7 @@ public class Aes {
             encCipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
             decCipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
         } catch (Exception e) {
-            logger.error(e.toString());
+            LOGGER.error(e.toString());
         }
     }
 
@@ -47,7 +58,7 @@ public class Aes {
             encrypted = encCipher.doFinal(padString(text).getBytes(ENCODING));
             return byte2hex(encrypted);
         } catch (Exception e) {
-            logger.error(e.toString());
+            LOGGER.error(e.toString());
         }
         return null;
     }
@@ -58,47 +69,25 @@ public class Aes {
         int x = source.getBytes(ENCODING).length % size;
         int padLength = size - x;
 
+        StringBuilder sourceBuilder = new StringBuilder(source);
         for (int i = 0; i < padLength; i++) {
-            source += paddingChar;
+            sourceBuilder.append(paddingChar);
         }
+        source = sourceBuilder.toString();
 
         return source;
     }
 
     public String decrypt(String text) {
-        byte[] decrypted;
+        byte[] decrypted = null;
 
         try {
             decrypted = decCipher.doFinal(hex2byte(text.getBytes(ENCODING)));
-            String plain = new String(decrypted, ENCODING).trim();
-            return plain;
+            return new String(decrypted, ENCODING).trim();
         } catch (Exception e) {
+            LOGGER.error(e.toString());
         }
         return null;
     }
 
-    public static String byte2hex(byte[] b) {
-        StringBuffer hs = new StringBuffer();
-        String stmp;
-        for (int n = 0; n < b.length; n++) {
-            stmp = (Integer.toHexString(b[n] & 0XFF));
-            if (stmp.length() == 1)
-                hs = hs.append("0").append(stmp);
-            else
-                hs = hs.append(stmp);
-        }
-        return hs.toString().toUpperCase();
-    }
-
-    public static byte[] hex2byte(byte[] b) {
-        if ((b.length % 2) != 0)
-            throw new IllegalArgumentException(
-                    "the length of the byte[] is not even:[" + b.length + "]");
-        byte[] b2 = new byte[b.length / 2];
-        for (int n = 0; n < b.length; n += 2) {
-            String item = new String(b, n, 2);
-            b2[n / 2] = (byte) Integer.parseInt(item, 16);
-        }
-        return b2;
-    }
 }

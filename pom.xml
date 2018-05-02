@@ -9,6 +9,7 @@
         <module>d1</module>
         <module>gateway</module>
         <module>d2</module>
+        <module>common</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -26,6 +27,7 @@
         <mysql.version>6.0.6</mysql.version>
         <fastjson.version>1.2.47</fastjson.version>
         <guava.version>24.1-jre</guava.version>
+        <okhttp.version>3.10.0</okhttp.version>
     </properties>
 
     <dependencyManagement>
@@ -72,6 +74,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
