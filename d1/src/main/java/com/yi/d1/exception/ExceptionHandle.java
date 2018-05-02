@@ -1,6 +1,7 @@
-package com.yi.common.exception;
+package com.yi.d1.exception;
 
 import com.yi.common.enums.ResultCodeEnums;
+import com.yi.common.exception.BizException;
 import com.yi.common.response.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
