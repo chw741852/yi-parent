@@ -2,5 +2,6 @@ spring:
   cloud:
     consul:
       config:
-        format: yaml
+        format: YAML
         profile-separator: '-'
+        data-key: d1

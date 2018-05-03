@@ -4,6 +4,10 @@ spring:
   application:
     name: gateway
   cloud:
-    consul:
-      host: localhost
-      port: 8500
+    gateway:
+      routes:
+      - id: d1
+        uri: lb://d1
+        predicates:
+        - Path=/d2/**
+

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/protected")
 public class MyController {
     private final MyService myService;
 

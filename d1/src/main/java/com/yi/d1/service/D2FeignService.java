@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @FeignClient("d2")
 public interface D2FeignService {
-    @RequestMapping(method = RequestMethod.GET, value = "/index")
+    @RequestMapping(method = RequestMethod.GET, value = "/protected/index")
     String index();
 
-    @RequestMapping(method = RequestMethod.GET, value = "/user")
+    @RequestMapping(method = RequestMethod.GET, value = "/protected/user")
     String userList();
 }
