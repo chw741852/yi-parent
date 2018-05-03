@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test 环境 -->
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="CONSOLE_PATTERN">%clr{%d{yyyy-MM-dd HH:mm:ss.SSS}}{faint} %clr{%5p} %clr{${sys:PID}}{magenta} %clr{---}{faint} %clr{[%15.15t]}{faint} %clr{%-40.40c{1.}[%L]}{cyan} %clr{:}{faint} %m%n</Property>
+        <Property name="FILE_PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${sys:PID} --- [%15.15t] %-40.40c{1.}[%L] : %m%n</Property>
+        <!-- 日志文件大小 -->
+        <Property name="FILE_SIZE">100MB</Property>
+        <Property name="FILE_NAME">logs/d1.log</Property>
+        <Property name="GZ_FILE_NAME">logs/%d{yyyy-MM}/d1_%d{yyyy-MM-dd}-%i.log.gz</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT"><!-- 输出debug及以上级别的信息（onMatch），其他拒绝（onMismatch） -->
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+        </Console>
+
+        <!-- 输出trace及以上级别的日志到指定文件，最大10M，warn、error除外 -->
+        <RollingFile name="File" fileName="${sys:FILE_NAME}" filePattern="${GZ_FILE_NAME}">
+            <PatternLayout pattern="${FILE_PATTERN}"/>
+            <Policies>
+                <!-- 每天压缩一次 -->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" />
+                <!-- 每100MB压缩一次 -->
+                <SizeBasedTriggeringPolicy size="${FILE_SIZE}" />
+            </Policies>
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+
+        <!--<Kafka name="kafka_log" topic="java-d1">-->
+        <!--<PatternLayout pattern="${FILE_PATTERN}"/>-->
+        <!--<Property name="bootstrap.servers">10.241.10.104:9092</Property>-->
+        <!--</Kafka>-->
+    </Appenders>
+    <loggers>
+        <!--<AsyncLogger name="com.yi.d1" level="debug" additivity="false" includeLocation="true">-->
+            <!--<AppenderRef ref="Console"/>-->
+            <!--<AppenderRef ref="file_log"/>-->
+            <!--&lt;!&ndash;<AppenderRef ref="kafka_log"/>&ndash;&gt;-->
+        <!--</AsyncLogger>-->
+
+        <!--<AsyncLogger name="org.apache.kafka" level="info"/>-->
+        <AsyncLogger name="org" level="info"/>
+        <AsyncLogger name="com.netflix" level="info"/>
+        <AsyncLogger name="io.lettuce" level="info"/>
+
+        <asyncRoot level="debug" includeLocation="true">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+            <!--<AppenderRef ref="kafka_log"/>-->
+        </asyncRoot>
+    </loggers>
+</Configuration>

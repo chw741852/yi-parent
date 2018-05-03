@@ -10,6 +10,7 @@
         <module>gateway</module>
         <module>d2</module>
         <module>common</module>
+        <module>Logging</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -28,6 +29,7 @@
         <fastjson.version>1.2.47</fastjson.version>
         <guava.version>24.1-jre</guava.version>
         <okhttp.version>3.10.0</okhttp.version>
+        <aspectjweaver.version>1.9.1</aspectjweaver.version>
     </properties>
 
     <dependencyManagement>
@@ -35,6 +37,11 @@
             <dependency>
                 <groupId>com.yi</groupId>
                 <artifactId>common</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yi</groupId>
+                <artifactId>Logging</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -50,6 +57,11 @@
                 <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectjweaver.version}</version>
             </dependency>
 
             <!-- DB -->

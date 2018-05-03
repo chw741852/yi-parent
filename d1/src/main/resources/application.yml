@@ -40,5 +40,4 @@ druid:
   poolPreparedStatements: true
   maxPoolPreparedStatementPerConnectionSize: 20
   filters: stat
-logging:
-  config: classpath:config/logback.xml
+

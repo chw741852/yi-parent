@@ -1,14 +1,21 @@
 package com.yi.d1.controller;
 
+import com.yi.d1.domain.User;
 import com.yi.d1.service.D2FeignService;
+import com.yi.logging.annotation.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RefreshScope
 public class MyController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyController.class);
     private final D2FeignService d2FeignService;
 
     @Value("${my.name}")
@@ -32,8 +39,15 @@ public class MyController {
         return d2FeignService.userList();
     }
 
+    @GetMapping("hello2")
+    public String hello2() {
+        return "aa";
+    }
+
     @GetMapping("hello")
-    public String hello() {
+    @Log(api = "/hello", title = "测试Hello World", operate = Log.Operate.SELECT)
+    public String hello(User user, HttpServletRequest request, String hello) {
+        LOGGER.debug("aaa");
         return "Hello World!";
     }
 }
