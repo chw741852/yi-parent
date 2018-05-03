@@ -172,28 +172,5 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>spring-roo-repository</id>
-            <name>Spring Roo Repository</name>
-            <url>http://maven.jahia.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>repo2</id>
-            <name>Human Readable Name for this Mirror.</name>
-            <url>http://repo2.maven.org/maven2/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>spring-maven-release</id>
-            <name>Spring Maven Release Repository</name>
-            <url>http://maven.jahia.org/maven2</url>
-        </repository>
-        <repository>
-            <id>spring-maven-milestone</id>
-            <name>Spring Maven Milestone Repository</name>
-            <url>http://maven.jahia.org/maven2</url>
-        </repository>
     </repositories>
 </project>
