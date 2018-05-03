@@ -5,7 +5,7 @@ package com.yi.logging;
  */
 public class LogBean {
     private String username;
-    private String opDate;
+    private String date;
     private long times;
     private String title;
     private String api;
@@ -24,12 +24,12 @@ public class LogBean {
         this.username = username;
     }
 
-    public String getOpDate() {
-        return opDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setOpDate(String opDate) {
-        this.opDate = opDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public long getTimes() {

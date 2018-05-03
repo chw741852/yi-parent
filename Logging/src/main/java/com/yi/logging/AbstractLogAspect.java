@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.yi.common.util.DateUtil;
 import com.yi.logging.annotation.Log;
-import org.aopalliance.intercept.Joinpoint;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -94,17 +93,18 @@ public abstract class AbstractLogAspect {
         }
         LogBean logBean = new LogBean();
         logBean.setUsername(getUsername());
-        logBean.setOpDate(DateUtil.dateToStr(new Date()));
+        logBean.setDate(DateUtil.dateToStr(new Date()));
         logBean.setTimes(times);
         logBean.setTitle(log.title());
         logBean.setApi(api);
-        logBean.setOpDate(log.operate().toString());
+        logBean.setOperate(log.operate().toString());
         logBean.setDesc(log.desc());
         logBean.setClassName(className);
         logBean.setMethodName(methodName);
         logBean.setRequest(request);
         logBean.setResponse(JSONObject.toJSONString(response));
 
+        LOGGER.info(JSONObject.toJSONString(logBean));
         sendLog(logBean);
 
         return true;
