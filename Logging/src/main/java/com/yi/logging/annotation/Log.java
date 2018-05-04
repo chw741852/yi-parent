@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * Created by caihongwei on 2018/5/2 16:40.
  */
-@Target({ElementType.METHOD, ElementType.TYPE})
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {

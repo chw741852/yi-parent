@@ -8,15 +8,15 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.*;
 
 /**
@@ -44,10 +44,21 @@ public abstract class AbstractLogAspect {
     @AfterReturning(value = "aspectMethod() && @annotation(log)", returning = "r")
     public void afterReturning(JoinPoint joinPoint, Log log, Object r) {
         long times = System.currentTimeMillis() - startTime.get();
-        if (threadPool == null) {
-            log(joinPoint, log, r, times);
-        } else {
-            CompletableFuture.supplyAsync(() -> log(joinPoint, log, r, times), threadPool);
+        //获取request
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+
+        try {
+            if (threadPool == null) {
+                log(joinPoint, log, r, times, request);
+            } else {
+                CompletableFuture.supplyAsync(() -> log(joinPoint, log, r, times, request), threadPool)
+                        .exceptionally(e -> {
+                            LOGGER.warn(e + "");
+                            return false;
+                        });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -56,11 +67,11 @@ public abstract class AbstractLogAspect {
         afterReturning(joinPoint, log, t);
     }
 
-    public abstract String getUsername();
+    public abstract String getUsername(HttpServletRequest request);
 
     public abstract void sendLog(LogBean logBean);
 
-    private boolean log(JoinPoint joinPoint, Log log, Object response, long times) {
+    private boolean log(JoinPoint joinPoint, Log log, Object response, long times, HttpServletRequest request) {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
@@ -81,27 +92,27 @@ public abstract class AbstractLogAspect {
                 sb.append(argName).append("=").append(args[i]).append("&");
             }
         }
-        String request;
+        String params;
         if (sb.length() > 0) {
-            request = sb.toString().substring(0, sb.length() - 1);
+            params = sb.toString().substring(0, sb.length() - 1);
         } else {
-            request = "";
-        }
-        String api = log.api();
-        if (api.trim().equals("")) {
-            api = getApi(joinPoint);
+            params = "";
         }
         LogBean logBean = new LogBean();
-        logBean.setUsername(getUsername());
+
+        logBean.setUsername(getUsername(request));
         logBean.setDate(DateUtil.dateToStr(new Date()));
         logBean.setTimes(times);
         logBean.setTitle(log.title());
-        logBean.setApi(api);
         logBean.setOperate(log.operate().toString());
         logBean.setDesc(log.desc());
         logBean.setClassName(className);
         logBean.setMethodName(methodName);
-        logBean.setRequest(request);
+        logBean.setIp(request.getRemoteAddr());
+        logBean.setRequestUri(request.getRequestURI());
+        logBean.setRequestUrl(request.getRequestURL() == null ? "" : request.getRequestURL().toString());
+        logBean.setRequestParams(params);
+        logBean.setRequestMethod(request.getMethod());
         logBean.setResponse(JSONObject.toJSONString(response));
 
         LOGGER.info(JSONObject.toJSONString(logBean));
@@ -110,37 +121,9 @@ public abstract class AbstractLogAspect {
         return true;
     }
 
-    private String getApi(JoinPoint joinPoint) {
-        StringBuilder sb = new StringBuilder();
-        RequestMapping classRequestMapping = joinPoint.getTarget().getClass().getAnnotation(RequestMapping.class);
-        if (classRequestMapping != null) {
-            sb.append(classRequestMapping.value()[0]);
-        }
-        RequestMapping requestMapping = ((MethodSignature)joinPoint.getSignature()).getMethod().getAnnotation(RequestMapping.class);
-        if (requestMapping != null) {
-            String a = requestMapping.value()[0];
-            if (!a.startsWith("/")) {
-                sb.append("/");
-            }
-            sb.append(requestMapping.value()[0]);
-        } else {
-            GetMapping getMapping = ((MethodSignature) joinPoint.getSignature()).getMethod().getAnnotation(GetMapping.class);
-            if (getMapping != null) {
-                String a = getMapping.value()[0];
-                if (!a.startsWith("/")) {
-                    sb.append("/");
-                }
-                sb.append(getMapping.value()[0]);
-            } else {
-                PostMapping postMapping = ((MethodSignature)joinPoint.getSignature()).getMethod().getAnnotation(PostMapping.class);
-                String a = postMapping.value()[0];
-                if (!a.startsWith("/")) {
-                    sb.append("/");
-                }
-                sb.append(postMapping.value()[0]);
-            }
-        }
-
-        return sb.toString();
+    // TODO
+    public String getParams(HttpServletRequest request) {
+        String params = request.getQueryString();
+        return "";
     }
 }

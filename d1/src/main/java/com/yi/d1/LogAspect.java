@@ -8,6 +8,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.Executors;
 
 /**
@@ -22,10 +23,8 @@ public class LogAspect extends AbstractLogAspect {
     }
 
     @Override
-    public String getUsername() {
-//        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-//        return request.getParameter("username");
-        return "Admin";
+    public String getUsername(HttpServletRequest request) {
+        return request.getParameter("username");
     }
 
     @Override

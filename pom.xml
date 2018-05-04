@@ -30,6 +30,7 @@
         <guava.version>24.1-jre</guava.version>
         <okhttp.version>3.10.0</okhttp.version>
         <aspectjweaver.version>1.9.1</aspectjweaver.version>
+        <lombok.version>1.16.20</lombok.version>
     </properties>
 
     <dependencyManagement>
@@ -96,6 +97,12 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>okhttp</artifactId>
                 <version>${okhttp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

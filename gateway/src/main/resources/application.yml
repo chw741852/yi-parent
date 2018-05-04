@@ -5,9 +5,13 @@ spring:
     name: gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
       - id: d1
-        uri: lb://d1
+#        uri: http://127.0.0.1:8080/
+        uri: lb://d1:8080/hello
         predicates:
-        - Path=/d2/**
+        - Path=/foo/{segment}
 
