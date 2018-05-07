@@ -47,7 +47,6 @@ public class MyController {
     @GetMapping("hello")
     @Log(api = "/hello", title = "测试Hello World", operate = Log.Operate.SELECT)
     public String hello(User user, HttpServletRequest request, String hello) {
-        LOGGER.debug("aaa");
-        return "Hello World!";
+        return "Hello d1";
     }
 }

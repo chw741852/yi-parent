@@ -4,3 +4,4 @@ spring:
       config:
         format: yaml
         profile-separator: '-'
+        data-key: gateway
