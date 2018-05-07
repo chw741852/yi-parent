@@ -58,7 +58,7 @@ public abstract class AbstractLogAspect {
                         });
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.error(e + "");
         }
     }
 
@@ -74,30 +74,30 @@ public abstract class AbstractLogAspect {
     private boolean log(JoinPoint joinPoint, Log log, Object response, long times, HttpServletRequest request) {
         String className = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
-        Object[] args = joinPoint.getArgs();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < args.length; i++) {
-            if (args[i] instanceof ServletRequest) {
-                continue;
-            }
-            String argName = "args" + i;
-            try {
-                JSONObject j = JSONObject.parseObject(JSONObject.toJSONString(args[i]));
-                if (j != null) {
-                    for (String s : j.keySet()) {
-                        sb.append(s).append("=").append(j.get(s)).append("&");
-                    }
-                }
-            } catch (ClassCastException | JSONException e) {
-                sb.append(argName).append("=").append(args[i]).append("&");
-            }
-        }
-        String params;
-        if (sb.length() > 0) {
-            params = sb.toString().substring(0, sb.length() - 1);
-        } else {
-            params = "";
-        }
+//        Object[] args = joinPoint.getArgs();
+//        StringBuilder sb = new StringBuilder();
+//        for (int i = 0; i < args.length; i++) {
+//            if (args[i] instanceof ServletRequest) {
+//                continue;
+//            }
+//            String argName = "args" + i;
+//            try {
+//                JSONObject j = JSONObject.parseObject(JSONObject.toJSONString(args[i]));
+//                if (j != null) {
+//                    for (String s : j.keySet()) {
+//                        sb.append(s).append("=").append(j.get(s)).append("&");
+//                    }
+//                }
+//            } catch (ClassCastException | JSONException e) {
+//                sb.append(argName).append("=").append(args[i]).append("&");
+//            }
+//        }
+//        String params;
+//        if (sb.length() > 0) {
+//            params = sb.toString().substring(0, sb.length() - 1);
+//        } else {
+//            params = "";
+//        }
         LogBean logBean = new LogBean();
 
         logBean.setUsername(getUsername(request));
@@ -111,7 +111,7 @@ public abstract class AbstractLogAspect {
         logBean.setIp(request.getRemoteAddr());
         logBean.setRequestUri(request.getRequestURI());
         logBean.setRequestUrl(request.getRequestURL() == null ? "" : request.getRequestURL().toString());
-        logBean.setRequestParams(params);
+        logBean.setRequestParams(getParams(request));
         logBean.setRequestMethod(request.getMethod());
         logBean.setResponse(JSONObject.toJSONString(response));
 
