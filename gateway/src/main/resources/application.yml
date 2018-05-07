@@ -3,25 +3,3 @@ server:
 spring:
   application:
     name: gateway
-#  cloud:
-#    gateway:
-#      routes:
-#      - id: test
-#        uri: lb:ws://d1
-#        predicates:
-#        - Path=/foo/**
-#        filters:
-#        - StripPrefix=1
-#      - id: protected
-#        uri: lb://d2
-#        predicates:
-#        - Path=/protected/**
-#        filters:
-#        - StripPrefix=1
-#        - SetPath=/protected/index
-#      - id: p2
-#        uri: http://localhost:10000
-#        predicates:
-#        - Path=/d2/protected/**
-#        filters:
-#        - SetPath=/hello
