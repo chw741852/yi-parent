@@ -1,6 +1,5 @@
 package com.yi.logging;
 
-import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.yi.common.util.DateUtil;
 import com.yi.logging.annotation.Log;
@@ -13,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.Objects;
@@ -101,7 +99,7 @@ public abstract class AbstractLogAspect {
         LogBean logBean = new LogBean();
 
         logBean.setUsername(getUsername(request));
-        logBean.setDate(DateUtil.dateToStr(new Date()));
+        logBean.setCreatedAt(DateUtil.dateToStr(new Date()));
         logBean.setTimes(times);
         logBean.setTitle(log.title());
         logBean.setOperate(log.operate().toString());
