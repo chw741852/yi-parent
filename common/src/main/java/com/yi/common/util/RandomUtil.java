@@ -8,9 +8,9 @@ import java.util.Random;
  * Created by caihongwei on 2018/5/9 16:38.
  */
 public class RandomUtil {
-    public static final String ALL_CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static final String LETTER_CHAR = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static final String NUMBER_CHAR = "0123456789";
+    private static final String ALL_CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String LETTER_CHAR = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String NUMBER_CHAR = "0123456789";
 
     /**
      * 返回一个定长的随机字符串(只包含大小写字母、数字)
