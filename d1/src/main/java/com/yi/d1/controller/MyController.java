@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,5 +49,11 @@ public class MyController {
     @Log(api = "/hello", title = "测试Hello World", operate = Log.Operate.SELECT)
     public String hello(User user, HttpServletRequest request, String hello) {
         return "Hello d1";
+    }
+
+    @PostMapping("hello")
+    @Log(title = "用户信息", operate = Log.Operate.SELECT, desc = "用户请求信息")
+    public String hello3(User user) {
+        return "hello world " + user.getName();
     }
 }

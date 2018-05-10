@@ -13,6 +13,7 @@ public @interface Log {
     String api() default "";
     Operate operate();
     String desc() default "";
+    int isFlux() default 0;
 
     enum Operate {
         CREATE, UPDATE, DELETE, SELECT

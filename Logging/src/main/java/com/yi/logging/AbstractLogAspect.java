@@ -9,11 +9,17 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.*;
 
@@ -21,6 +27,9 @@ import java.util.concurrent.*;
  * Created by caihongwei on 21/11/2017 7:03 PM.
  */
 public abstract class AbstractLogAspect {
+    @Value("${spring.application.name:}")
+    private String applicationName;
+
     protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractLogAspect.class);
     private ExecutorService threadPool;
     private ThreadLocal<Long> startTime = new ThreadLocal<>();
@@ -112,6 +121,7 @@ public abstract class AbstractLogAspect {
         logBean.setRequestParams(getParams(request));
         logBean.setRequestMethod(request.getMethod());
         logBean.setResponse(JSONObject.toJSONString(response));
+        logBean.setSysSource(applicationName);
 
         LOGGER.info(JSONObject.toJSONString(logBean));
         sendLog(logBean);
@@ -119,9 +129,28 @@ public abstract class AbstractLogAspect {
         return true;
     }
 
-    // TODO
     public String getParams(HttpServletRequest request) {
-        String params = request.getQueryString();
-        return "";
+        StringBuilder params = new StringBuilder();
+        Map<String, String[]> map = request.getParameterMap();
+        map.keySet().forEach(k -> {
+            params.append(k).append("=").append(Arrays.toString(map.get(k))).append("&");
+        });
+
+        if (request.getMethod().equalsIgnoreCase("post")) {
+            StringBuilder sb = new StringBuilder();
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"));
+                String temp;
+                while ((temp = br.readLine()) != null) {
+                    sb.append(temp);
+                }
+                br.close();
+            } catch (IOException e) {
+                LOGGER.error(e + "");
+            }
+            params.append("body=").append(sb);
+        }
+
+        return params.toString();
     }
 }
