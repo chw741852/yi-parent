@@ -133,7 +133,8 @@ public abstract class AbstractLogAspect {
         StringBuilder params = new StringBuilder();
         Map<String, String[]> map = request.getParameterMap();
         map.keySet().forEach(k -> {
-            params.append(k).append("=").append(Arrays.toString(map.get(k))).append("&");
+            String v = Arrays.toString(map.get(k));
+            params.append(k).append("=").append(v, 1, v.length() - 1).append("&");
         });
 
         if (request.getMethod().equalsIgnoreCase("post")) {
