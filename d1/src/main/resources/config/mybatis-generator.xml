@@ -2,15 +2,9 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-    <!-- 此处要用绝对路径 引入mysql包，maven中不管用 -->
-    <!--<classPathEntry location="E:/m2/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar" />-->
-
     <context id="context1">
-        <commentGenerator>
-            <property name="suppressDate" value="true"/>
-            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
-            <property name="suppressAllComments" value="true"/>
-        </commentGenerator>
+        <plugin type="com.yi.mybatis.plugin.OverIsMergeablePlugin"/>
+        <commentGenerator type="com.yi.mybatis.plugin.MyCommentGenerator"/>
 
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/db_test?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai"
@@ -23,7 +17,7 @@
         <!-- 生成映射文件的包名和位置-->
         <sqlMapGenerator targetPackage="com.yi.d1.mapper" targetProject="src/main/resources"/>
         <!-- 生成DAO的包名和位置-->
-        <javaClientGenerator targetPackage="com.yi.d1.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
+        <!--<javaClientGenerator targetPackage="com.yi.d1.mapper" targetProject="src/main/java" type="XMLMAPPER"/>-->
 
         <!-- 要生成哪些表-->
         <table tableName="test_user" domainObjectName="User" enableCountByExample="false"

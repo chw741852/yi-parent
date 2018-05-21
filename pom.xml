@@ -11,6 +11,7 @@
         <module>d2</module>
         <module>common</module>
         <module>Logging</module>
+        <module>mybatis-plugins</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -143,7 +144,15 @@
                             <artifactId>mysql-connector-java</artifactId>
                             <version>5.1.29</version>
                         </dependency>
+                        <dependency>
+                            <groupId>com.yi</groupId>
+                            <artifactId>mybatis-plugins</artifactId>
+                            <version>1.0-SNAPSHOT</version>
+                        </dependency>
                     </dependencies>
+                    <configuration>
+                        <overwrite>true</overwrite>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

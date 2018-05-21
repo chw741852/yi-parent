@@ -3,14 +3,29 @@ package com.yi.d1.domain;
 import java.util.Date;
 
 public class User {
+    /**
+     * id
+     */
     private String id;
 
+    /**
+     * 姓名
+     */
     private String name;
 
+    /**
+     * 年龄
+     */
     private Integer age;
 
+    /**
+     * 创建时间
+     */
     private Date createdAt;
 
+    /**
+     * 更新时间
+     */
     private Date updatedAt;
 
     public String getId() {

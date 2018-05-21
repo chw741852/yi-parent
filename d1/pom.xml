@@ -119,6 +119,7 @@
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <!-- 指定mybatis配置文件路径 -->
                 <configuration>
+                    <overwrite>true</overwrite>
                     <configurationFile>${mbg.config.xml}</configurationFile>
                 </configuration>
             </plugin>
