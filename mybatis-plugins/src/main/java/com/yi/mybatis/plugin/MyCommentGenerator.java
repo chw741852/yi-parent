@@ -143,7 +143,7 @@ public class MyCommentGenerator implements CommentGenerator {
 
     public void addFieldComment(Field field, IntrospectedTable introspectedTable,
                                 IntrospectedColumn introspectedColumn) {
-        if (suppressAllComments || introspectedColumn.getRemarks().trim().equals("")) {
+        if (suppressAllComments || introspectedColumn.getRemarks() == null || introspectedColumn.getRemarks().trim().equals("")) {
             return;
         }
         StringBuilder sb = new StringBuilder();
